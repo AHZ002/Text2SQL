@@ -17,7 +17,7 @@ from vanna.integrations.openai import OpenAILlmService  # Groq is OpenAI-compati
 
 load_dotenv()
 
-# ── config ────────────────────────────────────────────────────────────────────
+# config
 DB_PATH       = "clinic.db"
 GROQ_API_KEY  = os.getenv("GROQ_API_KEY")
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"

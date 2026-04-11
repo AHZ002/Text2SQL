@@ -2,7 +2,7 @@ import sqlite3
 import random
 from datetime import datetime, timedelta
 
-# ── helpers ──────────────────────────────────────────────────────────────────
+# helpers 
 
 def random_date(start: datetime, end: datetime) -> str:
     delta = end - start
@@ -13,7 +13,7 @@ def random_datetime(start: datetime, end: datetime) -> str:
     random_seconds = random.randint(0, int(delta.total_seconds()))
     return (start + timedelta(seconds=random_seconds)).strftime("%Y-%m-%d %H:%M:%S")
 
-# ── constants ─────────────────────────────────────────────────────────────────
+# constants
 
 TODAY      = datetime.today()
 ONE_YEAR_AGO = TODAY - timedelta(days=365)
@@ -67,7 +67,7 @@ STATUS_WEIGHTS = [15, 55, 20, 10]          # Completed most common
 INV_STATUSES      = ["Paid", "Pending", "Overdue"]
 INV_STATUS_WEIGHTS = [60, 25, 15]
 
-# ── schema ────────────────────────────────────────────────────────────────────
+# schema
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS patients (
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS invoices (
 );
 """
 
-# ── seed functions ────────────────────────────────────────────────────────────
+# seed functions
 
 def seed_doctors(cur):
     phones = [f"98{random.randint(10000000,99999999)}" for _ in DOCTOR_DATA]
@@ -228,7 +228,7 @@ def seed_invoices(cur, n_patients=200, target=300):
     )
     return len(rows)
 
-# ── main ──────────────────────────────────────────────────────────────────────
+# main
 
 def main():
     db_path = "clinic.db"

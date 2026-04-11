@@ -1,9 +1,9 @@
 import asyncio
 from vanna_setup import agent_memory
 
-# ── 15 known good question-SQL pairs ─────────────────────────────────────────
+# 15 known good question-SQL pairs 
 SEED_PAIRS = [
-    # ── Patient queries ───────────────────────────────────────────────────────
+    # Patient queries 
     (
         "How many patients do we have?",
         "SELECT COUNT(*) AS total_patients FROM patients"
@@ -38,7 +38,7 @@ SEED_PAIRS = [
            ORDER BY visit_count DESC"""
     ),
 
-    # ── Doctor queries ────────────────────────────────────────────────────────
+    # Doctor queries 
     (
         "List all doctors and their specializations",
         "SELECT name, specialization, department FROM doctors ORDER BY specialization"
@@ -62,7 +62,7 @@ SEED_PAIRS = [
            ORDER BY avg_duration DESC"""
     ),
 
-    # ── Appointment queries ───────────────────────────────────────────────────
+    # Appointment queries 
     (
         "Show me appointments for last month",
         """SELECT a.id, p.first_name, p.last_name, d.name AS doctor,
@@ -98,7 +98,7 @@ SEED_PAIRS = [
            FROM appointments"""
     ),
 
-    # ── Financial queries ─────────────────────────────────────────────────────
+    # Financial queries 
     (
         "What is the total revenue?",
         "SELECT SUM(total_amount) AS total_revenue FROM invoices"
