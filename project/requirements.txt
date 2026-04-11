@@ -1,0 +1,16 @@
+# Core Vanna 2.0 with SQLite support
+vanna[sqlite]>=2.0.0
+
+# API framework + server
+fastapi
+uvicorn[standard]
+
+# Data handling + charts
+plotly
+pandas
+
+# Load .env file securely
+python-dotenv
+
+# Groq LLM provider (Option B)
+groq
