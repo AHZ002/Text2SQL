@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
     yield
     print("🛑 Shutting down.")
 
-# ── App ───────────────────────────────────────────────────────────────────────
+# App 
 app = FastAPI(
     title="NL2SQL Clinic API",
     description="Natural Language to SQL system for clinic management",
@@ -43,7 +43,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Request / Response schemas ────────────────────────────────────────────────
+# Request / Response schemas
 class ChatRequest(BaseModel):
     question: str
 
@@ -55,7 +55,7 @@ class ChatResponse(BaseModel):
     row_count: Optional[int] = None
     error: Optional[str] = None
 
-# ── SQL Validation ────────────────────────────────────────────────────────────
+# SQL Validation
 DANGEROUS_KEYWORDS = re.compile(
     r"\b(INSERT|UPDATE|DELETE|DROP|ALTER|EXEC|EXECUTE|GRANT|REVOKE|SHUTDOWN"
     r"|TRUNCATE|REPLACE|CREATE|xp_|sp_)\b",
@@ -84,7 +84,7 @@ def validate_sql(sql: str) -> tuple[bool, str]:
 
     return True, ""
 
-# ── SQL extractor from agent response text ────────────────────────────────────
+# SQL extractor from agent response text
 SQL_BLOCK = re.compile(r"```(?:sql)?\s*(SELECT[\s\S]+?)```", re.IGNORECASE)
 SQL_BARE  = re.compile(r"(SELECT\s+[\s\S]+?;)", re.IGNORECASE)
 
@@ -102,7 +102,7 @@ def extract_sql(text: str) -> Optional[str]:
         return text[idx:].strip()
     return None
 
-# ── Database execution ────────────────────────────────────────────────────────
+# Database execution
 def run_query(sql: str) -> tuple[list, list]:
     """Execute SQL and return (columns, rows)."""
     con = sqlite3.connect(DB_PATH)
@@ -113,12 +113,7 @@ def run_query(sql: str) -> tuple[list, list]:
     con.close()
     return columns, rows
 
-# ── Collect all text from agent's async generator ─────────────────────────────
 async def collect_agent_response(question: str) -> str:
-    """
-    Drive the agent's async generator to completion and
-    return all simple_component text concatenated.
-    """
     ctx = RequestContext(
         metadata={"user_id": "default_user", "source": "api"}
     )
@@ -131,7 +126,7 @@ async def collect_agent_response(question: str) -> str:
             parts.append(component.simple_component.text)
     return "\n".join(parts)
 
-# ── Endpoints ─────────────────────────────────────────────────────────────────
+# Endpoints
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
