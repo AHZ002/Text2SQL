@@ -62,7 +62,7 @@ TREATMENT_NAMES = {
 }
 
 STATUSES      = ["Scheduled", "Completed", "Cancelled", "No-Show"]
-STATUS_WEIGHTS = [15, 55, 20, 10]          # Completed most common
+STATUS_WEIGHTS = [10, 70, 13, 7]          # Completed most common
 
 INV_STATUSES      = ["Paid", "Pending", "Overdue"]
 INV_STATUS_WEIGHTS = [60, 25, 15]

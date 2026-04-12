@@ -17,3 +17,7 @@ groq
 
 # OpenAI LLM provider, Vanna's OpenAI integration needs the openai
 openai
+
+# Rate limiting for API endpoints and plotly charts
+slowapi
+plotly
