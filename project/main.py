@@ -19,6 +19,7 @@ from vanna.core.user import RequestContext
 from vanna_setup import build_agent, agent_memory, DB_PATH
 
 # Logging setup
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
@@ -86,14 +87,28 @@ SYSTEM_TABLES = re.compile(
     re.IGNORECASE,
 )
 
+# Real tables in our database
+VALID_TABLES = {"patients", "doctors", "appointments", "treatments", "invoices"}
+
 def validate_sql(sql: str) -> tuple[bool, str]:
     stripped = sql.strip().upper()
+
+    # Must start with SELECT
     if not stripped.startswith("SELECT"):
         return False, "Only SELECT queries are allowed."
+
+    # No dangerous keywords
     if DANGEROUS_KEYWORDS.search(sql):
         return False, "Query contains forbidden keywords."
+
+    # No system tables
     if SYSTEM_TABLES.search(sql):
         return False, "Access to system tables is not allowed."
+
+    # Reject tool call syntax masquerading as SQL
+    if re.search(r"FROM\s+\w+\s*\(", sql, re.IGNORECASE):
+        return False, "Invalid SQL — function calls are not allowed as table sources."
+
     return True, ""
 
 # SQL extractor

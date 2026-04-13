@@ -55,7 +55,7 @@ def get_schema_prompt() -> str:
     con.close()
 
     schema_lines += [
-        "Rules:",
+        "Rules:" ,
         "- ALWAYS use the run_sql tool to answer data questions. Never make up numbers.",
         "- Only generate SELECT queries — never INSERT, UPDATE, DELETE, or DROP.",
         "- Use proper SQLite syntax (use strftime() for date functions).",
@@ -63,6 +63,11 @@ def get_schema_prompt() -> str:
         "- After a successful query, call save_question_tool_args to save the pattern.",
         "- When query results are returned, summarize them clearly for the user.",
         "- Today's date context: use date('now') for current date in SQLite.",
+        "- Invoice status values are exactly: 'Paid', 'Pending', 'Overdue' (case sensitive).",
+        "- Appointment status values are exactly: 'Scheduled', 'Completed', 'Cancelled', 'No-Show' (case sensitive).",
+        "- For 'unpaid invoices' use: status IN ('Pending', 'Overdue')",
+        "- For 'no-show' appointments use: status = 'No-Show'",
+        "- strftime('%w') returns 0=Sunday, 1=Monday ... 6=Saturday as text strings.",
     ]
 
     return "\n".join(schema_lines)
@@ -78,7 +83,7 @@ def build_agent() -> Agent:
         model=GROQ_MODEL,
     )
 
-    # 2. SQLite Runner
+    # 2.  SQLite Runner
     sql_runner = SqliteRunner(database_path=DB_PATH)
 
     # 3. Tools
