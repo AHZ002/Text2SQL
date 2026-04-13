@@ -198,4 +198,4 @@ at Groq's endpoint — no separate Groq SDK needed inside Vanna.
 
 ## Test Results
 
-See [RESULTS.md](RESULTS.md) — **20/20 questions passed**.
+See [RESULTS.md](project/RESULTS.md) — **20/20 questions passed**.
